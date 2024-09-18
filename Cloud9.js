@@ -132,6 +132,14 @@ class Cloud {
     this.ctx.fillStyle = color;
     this.ctx.fillRect(x - w / 2, y - h / 2, w, h);
   }
+  Line(startCoords, endCoords, color = "black") {
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = color;
+    this.ctx.moveTo(startCoords.x, startCoords.y);
+    this.ctx.lineTo(endCoords.x, endCoords.y);
+    this.ctx.stroke();
+    this.ctx.closePath();
+  }
 }
 class Character {
   constructor(draw_function, behavior_function, vars = {}) {
