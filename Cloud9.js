@@ -2,13 +2,14 @@ let distance = (obj1, obj2) => {
   return Math.sqrt((obj1.x - obj2.x) ** 2 + (obj1.y - obj2.y) ** 2);
 };
 class Cloud {
-  constructor() {
+  constructor(clear = true) {
     this.c = document.createElement("canvas");
     this.ctx = this.c.getContext("2d");
     this.objects = {};
     this.vars = {};
     this.bg = "white";
     this.classes = {};
+    this.clear = clear;
   }
   InitializeScreen(w, h, color = "white") {
     this.c.width = w;
@@ -81,7 +82,7 @@ class Cloud {
     while (this.objects[`${className}${id}`] != undefined) {
       id = Math.round(Math.random() * 899999) + 100000;
     }
-    this.objects[`Object${id}`] = new Character(clas.draw, clas.behavior, {
+    this.objects[`${className}${id}`] = new Character(clas.draw, clas.behavior, {
       ...clas.vars,
       ...specificVars,
     });
@@ -89,15 +90,14 @@ class Cloud {
   RunChararacter(name) {
     let char = this.objects[name];
     this.ctx.fillStyle = this.bg;
-    this.ctx.fillRect(0, 0, this.c.width, this.c.height);
+    this.clear ? this.ctx.fillRect(0, 0, this.c.width, this.c.height) : void(0);
     char.behavior(char.vars);
     char.draw(char.vars);
   }
   RunAll() {
     this.ctx.fillStyle = this.bg;
-    this.ctx.fillRect(0, 0, this.c.width, this.c.height);
+    this.clear ? this.ctx.fillRect(0, 0, this.c.width, this.c.height) : void(0);
     for (let i in this.objects) {
-      // console.log(i)
       let char = this.objects[i];
       char.behavior(char.vars);
       char.draw(char.vars);
